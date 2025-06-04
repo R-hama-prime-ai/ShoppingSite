@@ -9,12 +9,13 @@ import java.util.List;
 import jp.co.aforce.beans.Users;
 
 
+//全ての情報を取得する
 
 public class ShoppingSiteDao extends Dao {
 	public List<Users> getAllUsers() throws Exception {
 		List<Users> users = new ArrayList<>();
 		Connection con = getConnection();
-		String sql = "SELECT * FROM users";
+		String sql = "SELECT * FROM users ";
 		PreparedStatement st = con.prepareStatement(sql);
 		ResultSet rs = st.executeQuery();
 		while (rs.next()) {
@@ -33,7 +34,34 @@ public class ShoppingSiteDao extends Dao {
 		return users;
 	}
 	
+	//重複チェック機能
+	/*public boolean checkDuplication(String member_id) throws Exception{
+		
+		Connection con = getConnection();
+		String sql = "SELECT COUNT(*) FROM users WHERE MEMBER_ID = ?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setString(1, member_id);
+		
+		try (ResultSet rs = st.executeQuery()) {
+	        if (rs.next()) {
+	            return rs.getInt(1) > 0;
+	        }
+	        return false;
+	    }
+		
+		
+	}*/
 	
+	
+	
+	
+	/**
+	 * 
+	 * @param member_id
+	 * @return
+	 * @throws Exception
+	 */
+	//名前を取得する
 	public String getInfo(String member_id) throws Exception {
 		String fullName = null;
 		Connection con = getConnection();
@@ -58,9 +86,9 @@ public class ShoppingSiteDao extends Dao {
 	
 	
 	//Userを新規登録するメソッド
-		public void addUser(String member_id, String password, String last_name, String first_name, String address, String mail_address) throws Exception {
+		public String addUser(String member_id, String password, String last_name, String first_name, String address, String mail_address) throws Exception {
 			Connection con = getConnection();
-			String sql = "INSERT INTO users (member_id, password, last_name, first_name, address, mail_address) VALUES (?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO users (MEMBER_ID, PASSWORD, LAST_NAME, FIRST_NAME, ADDRESS, MAIL_ADDRESS) VALUES (?, ?, ?, ?, ?, ?)";
 			PreparedStatement st = con.prepareStatement(sql);
 			st.setString(1, member_id);
 			st.setString(2, password);
@@ -72,8 +100,43 @@ public class ShoppingSiteDao extends Dao {
 
 			st.close();
 			con.close();
+			return sql;
 
 		}
+		
+		
+	//アップデート処理
+		public int updateUser(String member_id, String last_name, String first_name, String mail_address) throws Exception {
+			Connection con = getConnection();
+		    String sql = "UPDATE users SET LAST_NAME = ?, FIRST_NAME = ?, MAIL_ADDRESS = ? WHERE MEMBER_ID = ?";
+		        PreparedStatement st = con.prepareStatement(sql);
+		        st.setString(1, last_name);
+		        st.setString(2, first_name);
+		        st.setString(3, mail_address);
+		        st.setString(4, member_id);
+		        int updatedRows = st.executeUpdate();
+		        
+		        st.close();
+				con.close();
+				
+				return updatedRows;
+		    }
+		
+		//削除機能
+		public String deleteUser(String member_id) throws Exception {
+			Connection con = getConnection();
+			String sql = "DELETE FROM users WHERE MEMBER_ID = ?";
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, member_id);
+			st.executeUpdate();
+			
+			st.close();
+			con.close();
+			return sql;
+		}
+		    
+		
+
 	
 
 }
