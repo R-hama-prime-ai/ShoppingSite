@@ -49,7 +49,6 @@ public class Login extends HttpServlet {
 			
 			boolean checkedUser = false;
 			
-			
 			if(users != null) {
 				for(Users user : users) {
 					if(user.getMember_id().equals(member_id) && user.getPassword().equals(password)) {
@@ -61,10 +60,15 @@ public class Login extends HttpServlet {
 			
 			if(checkedUser) {
 				HttpSession session = request.getSession();
-				//session.setAttribute("user_id", member_id);
+				session.setAttribute("user_id", member_id);
+				
 				String Name = checkDao.getInfo(member_id);
 				session.setAttribute("fullname", Name);
-				response.sendRedirect("user-menu.jsp");
+				
+				response.sendRedirect("user-menu.jsp"); //フォワードのほうが良き？
+				
+				//確認用 System.out.println(session.getAttribute("user_id"));
+				
 			}else {
 				RequestDispatcher dispatcher = request.getRequestDispatcher("login-error.jsp");
 				dispatcher.forward(request, response);

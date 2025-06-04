@@ -5,8 +5,20 @@
 <head>
 <meta charset="UTF-8">
 <title>ログイン画面</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/Home.css">
 </head>
 <body>
+
+<%--メニューバーの中に新規登録ボタンを置きたい --%>
+
+<div class="menu-bar">
+
+	<%--新規会員登録用insertのサーブレットに飛ばす --%>
+<form action="registration.jsp" method="post">
+	<input type="submit" value="新規会員登録">
+</form>
+
+</div>
 
 <%--アクションでメニュー、エラーを判断するサーブレットに情報を送る --%>
 <form action="Login" method="post">
@@ -19,10 +31,7 @@
 	<input type="submit" value="ログイン">
 </form>
 
-<%--新規会員登録用insertのサーブレットに飛ばす --%>
-<form method="post">
-	<input type="submit" value="新規会員登録">
-</form>
+
 
 </body>
 </html>
