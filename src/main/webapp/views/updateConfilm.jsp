@@ -12,6 +12,8 @@
 </head>
 <body>
 
+<h1>修正情報はこちらでよろしいでしょうか</h1>
+
 <%
 String last_name = (String) session.getAttribute("last_name");
 %>
