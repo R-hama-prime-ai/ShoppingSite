@@ -47,6 +47,13 @@ public class UpdateSession extends HttpServlet {
 		String last_name = request.getParameter("last_name");
 		String first_name = request.getParameter("first_name");
 		String mail_address = request.getParameter("mail_address");
+		
+		//セッション化
+				HttpSession session = request.getSession();
+				//入力値をセッションで保持
+				session.setAttribute("last_name", last_name);
+				session.setAttribute("first_name", first_name);
+				session.setAttribute("mail_address", mail_address);
 
 		//名前（姓）エラー
 		if (last_name == null || last_name.trim().isEmpty()) {
@@ -75,12 +82,7 @@ public class UpdateSession extends HttpServlet {
 			return;
 		}
 
-		//以上のエラーチェックを抜けたらセッション化
-		HttpSession session = request.getSession();
-		//入力値をセッションで保持
-		session.setAttribute("last_name", last_name);
-		session.setAttribute("first_name", first_name);
-		session.setAttribute("mail_address", mail_address);
+		
 
 		request.getRequestDispatcher("updateConfilm.jsp").forward(request, response);
 

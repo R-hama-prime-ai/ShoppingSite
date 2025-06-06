@@ -43,6 +43,8 @@ public class Login extends HttpServlet {
 		String member_id = request.getParameter("user_id");
 		String password = request.getParameter("password");
 		
+		//System.out.println("ログイン中");
+		
 		ShoppingSiteDao checkDao = new ShoppingSiteDao();
 		try {
 			List<Users> users = checkDao.getAllUsers();
@@ -76,6 +78,7 @@ public class Login extends HttpServlet {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+
 		}
 		
 		

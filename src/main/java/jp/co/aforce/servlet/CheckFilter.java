@@ -22,18 +22,23 @@ import jakarta.servlet.http.HttpSession;
 			HttpServletRequest httpRequest = (HttpServletRequest) request;
 		     HttpServletResponse httpResponse = (HttpServletResponse) response;
 		     String uri = httpRequest.getRequestURI();
+		     
+		     //System.out.println("フィルター前処理");
+		     //System.out.println(uri);
 		
-		     // ログインページや静的リソースへのアクセスはフィルタリングしない
-		     if (uri.contains("/views/login-in.jsp") || uri.contains("/css/")) {
+		     // ログインページやエラーページ、静的リソースへのアクセスはフィルタリングしない
+		     if (uri.contains("login-in.jsp") || uri.contains("registration.jsp") || uri.contains("login-error.jsp") || uri.contains("/views/Login") || uri.contains("/css/")) {
 		         chain.doFilter(request, response);
 		         return;
 		     }
 		
 		     HttpSession session = httpRequest.getSession(false);
 		     if (session == null || session.getAttribute("user_id") == null) {
+		    	 //System.out.println("フィルター中");
 		         // セッションがない場合、ログインページへリダイレクト
 		         //httpResponse.sendRedirect(httpRequest.getContextPath() + "login-in.jsp");
 		    	 httpResponse.sendRedirect("login-in.jsp");
+		    	 
 		     } else {
 		         // セッションがある場合、リクエストを続行
 		         chain.doFilter(request, response);

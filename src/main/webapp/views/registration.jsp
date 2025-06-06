@@ -22,7 +22,7 @@
 			ユーザーID：<input type="text" name="user_id" size="10" required>半角英数字
 		</p>
 		<p>
-			パスワード：<input type="text" name="password" required>半角英数字
+			パスワード：<input type="text" name="password" size="32" required>半角英数字
 		</p>
 		<p>
 			名前（姓）：<input type="text" name="last_name" required>

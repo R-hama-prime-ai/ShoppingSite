@@ -45,11 +45,6 @@ public class AddSession extends HttpServlet {
 		
 		String errorMessage = null;
 		
-		
-
-		
-		
-		
 		//入力値を取得
 		String member_id = request.getParameter("user_id");
 		String password = request.getParameter("password");
@@ -58,9 +53,20 @@ public class AddSession extends HttpServlet {
 		String address = request.getParameter("address");
 		String mail_address = request.getParameter("mail_address");
 		
-		
 		//エラーがあった場合にメッセージを追加
 		//IDエラー
+		/*ShoppingSiteDao checkDuplicationDao = new ShoppingSiteDao();
+		
+		try {
+			if(checkDuplicationDao.checkDuplication("member_id")) {
+				errorMessage = "この会員IDは既に保存されています";
+			}
+			
+		} catch (Exception e) {
+			errorMessage = "データベースでエラーが発生しました";
+			e.printStackTrace();
+		}*/
+		
 		if(member_id == null || member_id.trim().isEmpty()) {
 			errorMessage = "会員IDは必須です。";
 			
